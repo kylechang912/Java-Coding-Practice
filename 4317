@@ -1,0 +1,29 @@
+#
+DESCRIPTION
+Java의 환영 메세지를 출력하세요.
+
+INPUT
+없음
+
+OUTPUT
+Welcome to Java!를 첫째줄에 출력
+
+SAMPLE INPUT
+SAMPLE OUTPUT
+Welcome to Java!
+HINT
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Welcome to Java!");
+    }
+}
+#
+
+---
+
+public class Main {
+
+	public static void main(String[] args) {
+		  System.out.println("Welcome to Java!");
+	}
+}
