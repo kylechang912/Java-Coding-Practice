@@ -1,0 +1,62 @@
+DESCRIPTION
+입력으로 정렬된 배열 A, B와 숫자x가 주어졌을때, x와 가장 가까운 값을 가지는 A[i] + B[j]를 찾는 프로그램을 만드세요.
+
+INPUT
+* Line 1 : 배열A크기 배열B크기 숫자x
+- 배열A크기, 배열B크기, 숫자x: 1~1,000,000 범위의 정수
+
+* Line 2 : 공백으로 구분된  배열A의 자연수 원소
+
+* Line 3 : 공백으로 구분된 배열B의 자연수 원소
+
+OUTPUT
+* Line 1 : x와 가장 가까운 값을 가지는 A[i] + B[j]의 차(절댓값)
+
+SAMPLE INPUT
+4 4 30
+1 4 5 7
+10 20 30 40
+SAMPLE OUTPUT
+1
+
+-----
+
+import java.util.*;
+public class Main {
+    static Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) {
+
+        int a=sc.nextInt();
+        int b=sc.nextInt();
+        int c=sc.nextInt();
+
+        int[] X=new int[a];
+        int[] Y=new int[b];
+
+        for (int i = 0; i < a; i++) {
+            X[i] = sc.nextInt();
+        }
+
+        for (int j = 0; j < b; j++) {
+            Y[j] = sc.nextInt();
+        }
+
+        int dif = Math.abs(X[0] + Y[0] - c);
+
+
+        int p = 0,q = b-1;
+        int res_p = p, res_q = q;
+
+        while (p < a && q >= 0) {
+            if (Math.abs(X[p] + Y[q] - c) < dif) {
+                res_p = p; res_q = q;
+                dif = Math.abs(X[p] + Y[q] - c);
+            }
+            if ((X[p] + Y[q]) > c)
+                q--;
+            else
+                p++;
+        }
+        System.out.println(Math.abs(X[res_p]+Y[res_q]-c));
+    }
+}
