@@ -1,0 +1,86 @@
+DESCRIPTION
+주어진 4개의 점이 정사각형인지 체크하는 프로그램을 작성하세요.
+
+INPUT
+* Line 1 : 테스트케이스 T (1~1,000)
+
+* Line 2 ~ T+1 : 공백으로 구분된 4쌍의 좌표 값 (각 좌표값은 -100~100 범위의 정수) 
+
+OUTPUT
+* Line 1 ~ T : 정사각형일 경우 square를 출력, 아닐 경우 not square를 출력
+
+SAMPLE INPUT
+3
+0 0 0 2 2 0 2 2
+0 0 4 0 2 2 2 -2
+0 0 0 2 2 2 2 4
+SAMPLE OUTPUT
+square
+square
+not square
+
+-----
+
+import java.util.*;
+public class Main {
+    static Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) {
+        int input = sc.nextInt();
+        boolean check1 = false;
+        boolean check2 = false;
+        boolean check3 = true;
+        boolean[] result = new boolean[input];
+        for (int i = 0; i < input; i++) {
+            int[] x = new int[4];
+            int[] y = new int[4];
+            int[] save = new int[4];
+            
+            for (int j = 0; j < 4; j++) {
+                x[j] = sc.nextInt();
+                y[j] = sc.nextInt();
+            }
+            double x1 = (x[0] + x[1] + x[2] + x[3]) / 4;
+            double y1 = (y[0] + y[1] + y[2] + y[3]) / 4;
+            
+            double[] a = new double[3];
+            a[0] = Math.pow(x[1] - x[0], 2) + Math.pow(y[1] - y[0], 2);
+            a[1] = Math.pow(x[2] - x[0], 2) + Math.pow(y[2] - y[0], 2);
+            a[2] = Math.pow(x[3] - x[0], 2) + Math.pow(y[3] - y[0], 2);
+
+            Arrays.sort(a);
+
+            if (a[0] == a[1])
+                check1 = true;
+            
+            if (a[0] * 2 == a[2])
+                check2 = true;
+            
+            Arrays.sort(x);
+            
+            if (x[0] == x[1] && x[0] == x[2]) {
+                check3 = false;
+            }
+
+            if (check1 && check2 && check3) {
+                
+                result[i] = true;
+                check1 = false;
+                check2 = false;
+                check3 = true;
+            }
+            else {
+                result[i] = false;
+                check1 = false;
+                check2 = false;
+                check3 = true;
+            }
+        }
+        for (int k = 0; k < input; k++) {
+            if (result[k])
+                System.out.println("square");
+            
+            else
+                System.out.println("not square");
+        }
+    }
+}
