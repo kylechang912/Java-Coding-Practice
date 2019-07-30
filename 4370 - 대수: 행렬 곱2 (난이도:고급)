@@ -1,0 +1,97 @@
+DESCRIPTION
+n개의 행렬을 서로 곱할때는 곱하는 순서에 따라 곱셈의 횟수가 달라지곤 한다. 예를 들어 행렬 A의 크기가 10 × 30 이고, 행렬 B의 크기가 30 × 5 이고, 행렬 C의 크기가 5 × 60 라고 하자. (AB)C와 A(BC)를 계산하는데 필요한 곱셈의 횟수는 다음과 같다.
+
+(AB)C = (10×30×5) + (10×5×60) = 1500 + 3000 = 4500 
+A(BC) = (30×5×60) + (10×30×60) = 9000 + 18000 = 27000 
+여러분은 n개의 행렬의 크기를 입력받아, n개의 행렬을 모두 곱하는데 필요한 곱셈의 최소 횟수를 구하는 프로그램을 작성해야한다.
+
+ 
+
+INPUT
+* Line 1 : 행렬의 개수 n (1~1,000)
+
+* Line 2 ~ n+1 : 행의_개수 열의_개수 
+
+- 모든 개수는 정수이며 범위는 1~1,000
+
+ 
+
+입력으로 주어지는 순서로 곱하려는 상황이고,
+
+i번째 행렬의 열의 개수와
+
+i+1번째 행렬의 행의 개수는 같다.
+
+OUTPUT
+* Line 1 : 필요한 곱셈의 최소 회수
+
+SAMPLE INPUT
+4
+40 20
+20 30
+30 10
+10 30
+SAMPLE OUTPUT
+26000
+SOURCE
+JAVA2015 PE8.6
+
+-----
+
+import java.util.Scanner;
+public class Main {
+    static Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) {
+        int a = sc.nextInt();
+        int[] x = new int[a + 1];
+        int[] total = new int[a * 2];
+        int count = 0;
+        for (int i = 0; i < a * 2; i++) {
+            total[i] = sc.nextInt();
+        }
+        for (int i = 0; i < a; i++) {
+            x[i] = total[i * 2];
+        }
+        x[a] = total[a * 2 - 1];
+        int n = x.length;
+        System.out.println(Matricorder(x,n));
+    }
+    
+    public static long Order(int y[], int i, int j) {
+        if (i == j)
+            return 0;
+        int k;
+        long min = 1,count;
+        for (int l = 0; l < y.length; l++) {
+            min *= y[i];
+        }
+        for (k = i; k < j; k++) {
+            count = Order(y, i, k) + Order(y,k+1, j) + y[i-1] * y[k] * y[j];
+            if (count < min)
+                min = count;
+        }
+        return min;
+    }
+
+    public static long Matricorder(int z[], int n) {
+        long[][] m = new long[n][n];
+        int i, j, k, L;
+        long q;
+        long min = 1000000000;
+
+        for (i = 1; i < n; i++)
+            m[i][i] = 0;
+        for (L = 2; L < n; L++) {
+            for (i = 1; i < n - L + 1; i++) {
+                j = i + L - 1;
+                m[i][j] = min;
+                for (k = i; k <= j - 1; k++) {
+                    q = m[i][k] + m[k + 1][j] + z[i - 1] * z[k] * z[j];
+                    if (q < m[i][j])
+                        m[i][j] = q;
+                }
+            }
+        }
+        return m[1][n-1];
+    }
+}
