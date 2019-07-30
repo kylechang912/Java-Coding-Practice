@@ -1,0 +1,58 @@
+DESCRIPTION
+전통적인 8퀸 퍼즐은 체스판에서 8명의 퀸이 서로 공격 못하게(동일 행, 동일 칼럼, 동일 대각선 상에 있는 퀸은 서로 공격할 수 있다) 배치하는 문제이다. 이 문제를 확장해서 NxN 체스판에 N개의 퀸이 서로 공격 못하게 배치하는 문제를 N퀸 퍼즐이라고 한다. 여러분은 NxN 체스판에서 N개의 퀸이 서로 공격 못하게 배치할 수 있는 모든 가지수를 계산하는 프로그램을 작성해야 한다.
+
+INPUT
+* Line 1 : N을 나타내는 정수 (1 ≤ N < 11)
+
+OUTPUT
+* Line 1 : N개의 퀸을 서로 공격 못하게 배치하는 경우의 수
+
+SAMPLE INPUT
+8
+SAMPLE OUTPUT
+92
+SOURCE
+JAVA2015 PE7.22
+
+-----
+
+import java.util.Arrays;
+import java.util.Scanner;
+public class Main {
+    static int count = 0;
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int input = sc.nextInt();
+        int[] a = new int[input];
+
+        Qboard(0, a);
+        System.out.println(count);
+    }
+    public static void Qboard (int x, int[] y) {
+        int a = y.length;
+        if (x == a) {
+            String q = Arrays.toString(y);
+            count++;
+        } else {
+            for (int column = 0; column < a; column++) {
+                if (Q (column, x, y)) {
+                    y[x] = column;
+                    Qboard( x + 1, y);
+                    y[x] = -1;
+                }
+            }
+        }
+    }
+    public static boolean Q (int x, int y, int[] z) {
+        for (int i = 0; i < y; i++) {
+            if (Math.abs(z[i] - x) == Math.abs(i - y)) {
+                return false;
+            }
+            if (z[i] == x) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
