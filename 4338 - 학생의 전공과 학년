@@ -1,0 +1,56 @@
+DESCRIPTION
+전공과 학년을 의미하는 두개의 문자를 입력으로 받아 전공과 학년의 완벽한 이름을 출력하는 프로그램을 작성하세요. 첫번째 문자는 전공을 나타내며 아래 보이는 목록중 하나입니다. 두번째 문자는 학년을 나타내며 1부터 차례대로 Freshman, Sophomore, Junior, Senior로 표현하면 됩니다.
+
+Write a program that prompts the user to enter two characters and displays the major and status represented in the characters. The first character indicates the major and the second is number character 1, 2, 3, 4, which indicates whether a student is a freshman, sophomore, junior, or senior. Suppose the following chracters are used to denote the majors:
+
+M: Mathematics
+C: Computer Science
+I: Information Technology
+INPUT
+* Line 1 : 문자x2
+
+ 
+
+OUTPUT
+* Line 1 : 전공과 학년을 공백으로 구분해 출력
+
+ 
+
+SAMPLE INPUT
+C3
+SAMPLE OUTPUT
+Computer Science Junior
+SOURCE
+JAVA2015 PE4.18
+
+-----
+
+import java.util.Scanner;
+public class Main {
+    static Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) {
+
+        String a,b,c;
+        a = "a";
+        b = "0";
+        c = sc.nextLine();
+
+        if(c.contains("M"))
+            a = "Mathematics";
+        else if (c.contains("C"))
+                a = "Computer Science";
+        else if (c.contains("I"))
+                a = "Information Technology";
+
+        if(c.contains("1"))
+            b = "Freshman";
+        else if (c.contains("2"))
+                b = "Sophomore";
+        else if (c.contains("3"))
+                b = "Junior";
+        else if (c.contains("4"))
+                b = "Senior";
+
+        System.out.println(a+" "+b);
+    }
+}
