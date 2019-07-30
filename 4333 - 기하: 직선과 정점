@@ -1,0 +1,63 @@
+DESCRIPTION
+정점 p0(x0, y0)에서 정점 p1(x1, y1)로의 직선이 있을 때, 정점 p2(x2, y2)가 직선의 왼쪽 또는 오른쪽 또는 직선의 연장선(양방향) 위에 있는지 판단하는 프로그램을 작성하세요.
+
+Given a directed line from point p0(x0, y0) to p1(x1, y1), you can use the following condition to decide whether a point p2(x2, y2) is on the left of the line, on the right, or on the same line (see Figure 3.11):
+
+
+
+Write a program that prompts the user to enter the three points for p0, p1, and p2 and displays whether p2 is on the left of the line from p0 to p1, on the right, or on the same line. 
+
+INPUT
+* Line 1 : p0의 좌표 x1 y1 
+
+* Line 2 : p1의 좌표 x2 y2 (p0를 제외한 좌표)
+
+* Line 3 : p2의 좌표 x3 y3 
+
+(x1,y1,x2,y2,x3,y3는 절대값이 100보다 작은 실수)
+
+ 
+
+OUTPUT
+* Line 1 : 만약 p2가 직선의 왼쪽에 있다면 left, 오른쪽에 있다면 right, 직선의 연장선(양방향) 위에 있다면 on the line을 출력
+
+ 
+
+SAMPLE INPUT
+1 1
+5 5
+2 2
+SAMPLE OUTPUT
+on the line
+SOURCE
+JAVA2015 PE3.25
+
+-----
+
+import java.util.Scanner;
+public class Main {
+    static Scanner sc = new Scanner(System.in);
+
+    public static void main(String[] args) {
+
+        double x0 = sc.nextDouble();
+        double y0 = sc.nextDouble();
+        double x1 = sc.nextDouble();
+        double y1 = sc.nextDouble();
+        double x2 = sc.nextDouble();
+        double y2 = sc.nextDouble();
+
+        double a = (x1 - x0) * (y2 - y0);
+        double b = (x2 - x0) * (y1 - y0);
+
+        if (a - b > 0)
+            System.out.println("left");
+
+        else if (a - b < 0)
+            System.out.println("right");
+
+        else
+            System.out.println("on the line");
+
+    }
+}
