@@ -1,0 +1,94 @@
+DESCRIPTION
+2차 배열을 오름차순으로 정렬해서 출력하는 프로그램을 만드세요. 먼저 첫번째 원소로 오름차순으로 정렬하고, 만약 동일한 첫번째 원소를 가질 경우 두번째 원소로 오름차순으로 정렬해야 합니다. Write a program to sort a two-dimensional array. The program performs a primary sort on rows and a secondary sort on columns.
+
+예를 들어 다음과 같은 2차배열이 입력으로 들어온다면 For example, the following array
+
+{{4, 2},{1, 7},{4, 5},{1, 2},{1, 1},{4, 1}}
+
+다음과 같이 정렬되어야 합니다. will be sorted to
+
+{{1, 1},{1, 2},{1, 7},{4, 1},{4, 2},{4, 5}}.
+
+ 
+
+INPUT
+* Line 1 : 배열의 크기 N (1~100)
+
+* Line 2 ~ N+1 : 첫번째원소 두번째원소 (각각 int범위의 정수)
+
+ 
+
+OUTPUT
+* Line 1 ~ N : 정렬된 배열의 원소
+
+ 
+
+SAMPLE INPUT
+6
+4 2
+1 7
+4 5
+1 2
+1 1
+4 1
+SAMPLE OUTPUT
+1 1
+1 2
+1 7
+4 1
+4 2
+4 5
+SOURCE
+JAVA2015 PE8.16
+
+-----
+
+import java.util.Arrays;
+import java.util.Scanner;
+public class Main {
+    static Scanner sc = new Scanner(System.in);
+
+    public static void main(String[] args) {
+
+        int input = sc.nextInt();
+
+        int[][] a = new int[input][2];
+        for (int i = 0; i < a.length; i++)
+            for (int j = 0; j < a[i].length; j++)
+                a[i][j] = sc.nextInt();
+
+        sort(a);
+        display(a);
+
+    }
+
+    public static void sort(int a[][]) {
+        for (int i = 0; i < a.length - 1; i++) {
+            int currindex = i;
+            int[] curr = a[i];
+            for (int j = i + 1; j < a.length; j++) {
+                if (curr[0] > a[j][0] || curr[0] == a[j][0] && curr[1] > a[j][1]) {
+                    curr = a[j];
+                    currindex = j;
+                }
+            }
+            if (currindex != i) {
+                a[currindex] = a[i];
+                a[i] = curr;
+            }
+        }
+    }
+
+    public static void display(int[][] a) {
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a[i].length; j++) {
+                if (j == a[0].length - 1) {
+                    System.out.printf("%d", a[i][j]);
+                } else {
+                    System.out.printf("%d ", a[i][j]);
+                }
+            }
+            System.out.println();
+        }
+    }
+}
