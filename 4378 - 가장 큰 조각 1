@@ -1,0 +1,98 @@
+DESCRIPTION
+0과 1로 채워진 사각행렬이 주어졌을 때, 1로 채워진 가장 큰 부분 행렬을 찾는 프로그램을 작성하세요. (동일한 크기가 여러개 일 경우에는 i, j 우선순위로 가장 가까운 사각행렬을 출력)
+
+Given a square matrix with the elements 0 or 1, write a program to find a maximum square submatrix whose elements are all 1s. Your program should prompt the user to enter the number of rows in the matrix. The program then displays the location of the first element in the maximum square submatrix and the number of the rows in the submatrix.
+
+ 
+
+INPUT
+* Line 1 : 행의개수N (N은 1~20범위의 정수)
+
+* Line 2 ~ N+1 : 공백으로 구분된 N개의 0 또는 1
+
+OUTPUT
+* Line 1 : i j k
+- i: 부분행렬의 시작행 (0부터시작)
+- j: 부분행렬의 시작열 (0부터시작)
+- k: 부분행렬의 크기
+
+SAMPLE INPUT
+5
+1 0 1 0 1
+1 1 1 0 1
+1 0 1 1 1
+1 0 1 1 1
+1 0 1 1 1
+SAMPLE OUTPUT
+2 2 3
+SOURCE
+JAVA2015 PE8.35
+
+-----
+
+import java.util.Scanner;
+public class Main {
+    static Scanner sc = new Scanner(System.in);
+
+    public static void main(String[] args) {
+
+        int numofrow = sc.nextInt();
+        int[][] a = new int[numofrow][numofrow];
+
+        for (int i = 0; i < a.length; i++)
+            for (int j = 0; j < a.length; j++)
+                a[i][j] = sc.nextInt();
+
+        Square sq = getLargestSquare(a);
+        System.out.println(sq);
+    }
+
+    private static final class Square {
+        private final int x, y, size;
+
+        public Square(int x, int y, int size) {
+            super();
+            this.x = x;
+            this.y = y;
+            this.size = size;
+        }
+        @Override
+        public String toString() {
+            return String.format("%d %d %d", y, x, size);
+        }
+    }
+
+
+    private static Square getLargestSquare(int[][] matrix) {
+        if (matrix == null || matrix.length == 0) {
+            return null;
+        }
+        final int height = matrix.length;
+        final int width = matrix[0].length;
+
+        Square max = null;
+
+        int[] previous = null;
+        int[] current = matrix[0];
+
+        for (int y = 1; y < height; y++) {
+
+            previous = current;
+            current = new int[width];
+            for (int x = 0; x < width; x++) {
+                if (matrix[y][x] == 1) {
+                    int span = 1;
+                    if (x > 0) {
+                        span = 1 + Math.min(current[x - 1], Math.min(previous[x], previous[x - 1]));
+                    }
+                    if (max == null || span > max.size) {
+
+                        max = new Square(x - span + 1, y - span + 1, span);
+                    }
+                    current[x] = span;
+                }
+            }
+        }
+        return max;
+    }
+}
